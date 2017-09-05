@@ -32,7 +32,7 @@ function findCampusById(req,res,next){
                     }
                 ).catch(
                     err=>{
-                        res.status(500).send({ message: 'Error interno del sistema' })
+                        res.status(500).send({ message: 'Error interno del sistema'+err })
                         return
                     }
                 )
@@ -77,7 +77,7 @@ function findSchoolById(req,res,next){
         if (mongoose.Types.ObjectId.isValid(req.params.id)) {
             School.findOne({_id:req.params.id})
                 .deepPopulate(constants.populateQuerySchool)
-                .exec()
+                .select('+campus')
                 .then(
                     data=>{
                         if(!data){
@@ -85,7 +85,7 @@ function findSchoolById(req,res,next){
                             return
                         }else{
                             req.schoolFound = data
-                            req.oldCampus = data.campus
+                            //req.oldCampus = data.campus._id
                             next()
                         }
                     }
@@ -140,38 +140,86 @@ function list(req,res,next){
  * Fecha Creación : 05/09/2017
  * Fecha Última Actualización: 05/09/2017
  * Rev:  0.0.1 - 050917 Creación de la función
+ * Middleware que actualiza todos los atributos de la escuela proporcionada
+ */
+function update(req,res,next){
+    if(req.body.name){
+        req.schoolFound.name = req.body.name.toUpperCase()
+    }
+
+    if(req.body.description){
+        req.schoolFound.description = req.body.description
+    }
+
+    next()
+}
+
+/**
+ * Autor: José Ricardo Pérez Pérez
+ * Fecha Creación : 05/09/2017
+ * Fecha Última Actualización: 05/09/2017
+ * Rev:  0.0.1 - 050917 Creación de la función
  * Versión : 0.0.1
  * Middleware que se encarga de asignar el viejo campus
  * para retirar la escuela y asignar el nuevo campus
  * **/
 function updateCampus(req,res,next){
-    
-        if(req.body.name){
-            res.status(409).send({message:"No se permite operar con el nombre en este recurso."})
-            return
-        }
-    
-        if(req.body.description){
-            res.status(409).send({message:"No se permite operar con la descripción en este recurso."})
-            return
-        }
-        
-        if(!req.body.campus){
-            res.status(409).send({message:"El id de campus es necesario para consumir este recurso."})
-            return
-        }
-    
-        if(req.body.campus){
-            req.oldCampus = req.schoolFound.campus
-            req.schoolFound.campus = req.body.campus
-        }
-    
+    if(!req.body.campus){
+        res.status(409).send({message:"El id de campus es requerido"})
+        return
+    }else{
+        req.oldCampus = {}
+        //Mantenemos en una bandera el campus anterior
+        req.oldCampus = req.schoolFound.campus._id
+        req.schoolFound.campus = req.body.campus
+        console.log("OLD CAMPUS ")
+        console.log(req.oldCampus)
+        console.log("NEW CAMPUS")
+        console.log(req.schoolFound.campus)
         next()
+    }
+}
+
+/**
+ * Autor: José Ricardo Pérez Pérez
+ * Fecha Creación : 05/09/2017
+ * Fecha Última Actualización: 05/09/2017
+ * Rev:  0.0.1 - 050917 Creación de la función
+ * Versión : 0.0.1
+ * Middleware que se encarga de eliminar el viejo campus
+ * **/
+function deleteOldCampus(req, res,next) {
+    //Si viene el cambio de campus 
+    //Eliminamos el campus donde se encuentre dada de alta la escuela
+    if(req.body.campus){
+        //Eliminamos la escuela del campus viejo
+        //console.log("OLD")
+        //console.log(req.oldCampus)
+        Campus
+            .findByIdAndUpdate({_id:req.oldCampus},{ $pull: {schools: req.params.id}})
+            .exec()
+            .then(data=>{
+                console.log("PRUEBA")
+                console.log(data)
+                console.log("Campus nuevo")
+                console.log(req.campusFound)
+                //Ahora guardamos en el nuevo campus la relación
+                req.campusFound.schools.push(req.params.id)
+                next()
+            })
+            .catch(err=>{res.status(500).send({ message: 'Error interno del sistema.'+err });return;})
+    }else{
+        res.status(409).send({message:"El id de campus es necesario para consumir este recurso."})
+        return
+    }
 }
 
 module.exports = {
-    store,
     findCampusById,
+    store,
     findSchoolById,
-    list
+    list,
+    update,
+    updateCampus,
+    deleteOldCampus
 }

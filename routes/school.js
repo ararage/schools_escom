@@ -22,22 +22,28 @@ api.get('/schools/',
     SchoolController.list
 );
 
+//Ruta para obtener un registro School por id
+api.get('/schools/:id', 
+    SchoolMidd.findSchoolById,
+    SchoolController.show
+);
+
 //Ruta para actualizar un registro "School" por id 
-/*api.put('/schools/:id?',
+api.put('/schools/:id?',
     UtilsMidd.emptyBodyMidd,
     SchoolMidd.findSchoolById,
     SchoolMidd.update,
     SchoolController.update
-);*/
+);
 
 //Ruta para actualizar el campus de un registro "School" por id 
 api.put('/schools/:id?/campus',
     UtilsMidd.emptyBodyMidd,
     SchoolMidd.findSchoolById,
-    SchoolMidd.findCampusById
-    //,SchoolMidd.updateCampus,
-    //SchoolMidd.deleteOldCampus,
-    //SchoolController.updateCampus
+    SchoolMidd.findCampusById,
+    SchoolMidd.updateCampus,
+    SchoolMidd.deleteOldCampus,
+    SchoolController.updateCampus
 );
 
 module.exports = api;

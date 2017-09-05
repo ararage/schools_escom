@@ -1,0 +1,290 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Escuelas",
+		"_postman_id": "299ae71e-6a45-bf02-649e-d1b8673f2f9c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Instituciones",
+			"description": "Recursos del recurso /schools/api/institutions",
+			"item": [
+				{
+					"name": "http://localhost:3978/schools/api/institutions",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"uapb\",\n\t\"description\":\"Esta cara\"\n}"
+						},
+						"description": "Alta de instituciones"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/institutions/59adaf27ff138d0fd4b822f8",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions/59adaf27ff138d0fd4b822f8",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener una institución por id"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/institutions/all/1",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions/all/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener las instituciones por paginación"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/institutions/all",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions/all",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener todas las instituciones sin paginación"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/institutions/59adaf27ff138d0fd4b822f8",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions/59adaf27ff138d0fd4b822f8",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\":\"Editado\"\n}"
+						},
+						"description": "Actualizar una institución por id"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/institutions/59add68fa1bf9e2a44f5f52c",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions/59add68fa1bf9e2a44f5f52c",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": "Eliminar una institición por id"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/institutions/59adde5892daba2424695048/campuses",
+					"request": {
+						"url": "http://localhost:3978/schools/api/institutions/59adde5892daba2424695048/campuses",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener los campuses de una institución"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Campuses",
+			"description": "Colección de campuses",
+			"item": [
+				{
+					"name": "http://localhost:3978/schools/api/campuses",
+					"request": {
+						"url": "http://localhost:3978/schools/api/campuses",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Campus Centro\",\n\t\"description\":\"Esta bien chula\",\n\t\"institution\":\"59adde5892daba2424695048\"\n}"
+						},
+						"description": "Dar de alta un campus"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/campuses",
+					"request": {
+						"url": "http://localhost:3978/schools/api/campuses",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener los campus"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/campuses/59aeea6a1e252b1cac2876eb",
+					"request": {
+						"url": "http://localhost:3978/schools/api/campuses/59aeea6a1e252b1cac2876eb",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": "Eliminar un campus por id"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/campuses/59ade80a42a31b1fd8744b54",
+					"request": {
+						"url": "http://localhost:3978/schools/api/campuses/59ade80a42a31b1fd8744b54",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener un campus por id"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/campuses/59ade80a42a31b1fd8744b54",
+					"request": {
+						"url": "http://localhost:3978/schools/api/campuses/59ade80a42a31b1fd8744b54",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Campus central\"\n}"
+						},
+						"description": "Actualizar un campus"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/campuses/59ade80a42a31b1fd8744b54/schools",
+					"request": {
+						"url": "http://localhost:3978/schools/api/campuses/59ade80a42a31b1fd8744b54/schools",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener las escuelas de un campus en especifico"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Escuelas",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:3978/schools/api/schools",
+					"request": {
+						"url": "http://localhost:3978/schools/api/schools",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"La chida\",\n\t\"description\":\"Esto es una descripción\",\n\t\"campus\":\"59af01b799e9860bd48424c4\"\n}"
+						},
+						"description": "Petición para guardar una escuela"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/schools",
+					"request": {
+						"url": "http://localhost:3978/schools/api/schools",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener todas las escuelas"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/schools/59af0d7c19d0750b34d13c3b",
+					"request": {
+						"url": "http://localhost:3978/schools/api/schools/59af0d7c19d0750b34d13c3b",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Obtener una escuela por id"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/schools/59af0d7c19d0750b34d13c3b",
+					"request": {
+						"url": "http://localhost:3978/schools/api/schools/59af0d7c19d0750b34d13c3b",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\":\"Ni tan centrica\"\n}"
+						},
+						"description": "Actualizar los atributos de un registro School"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3978/schools/api/schools/59aed7b15bc8990e748c4a77/campus",
+					"request": {
+						"url": "http://localhost:3978/schools/api/schools/59aed7b15bc8990e748c4a77/campus",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"campus\":\"59ade80a42a31b1fd8744b54\"}"
+						},
+						"description": "Actualizar el campus de una escuela"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

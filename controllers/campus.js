@@ -14,21 +14,39 @@ var mongoose = require('mongoose');
 function store(req,res){
     var campus = new Campus(req.body)
 
-    campus.save().then(
+    //Ejecutamos una promesa de la función save() 
+    //para guardar el nuevo documento
+    var promesa = campus.save().then(
         data=>{
-            if(data){
-                //Buscamos el registro ya creado y comenzamos a popular los la relacion con Institución
-                Campus.findOne({_id:data._id}).populate(constants.populateQueryCampusInstitution).exec().then(
-                    data=>{res.status(200).send({data:data});return;}
-                )
-            }else{
-                res.status(500).send({ message: "Error interno del sistema" })
-                return
-            }
+            //si es guardado retornamos el dato en la promesa
+            return data
         },
         reject => {
             res.status(409).send({message:reject})
             return 
+        }
+    ).catch(
+        err=>{
+            res.status(500).send({message:"Error interno del sistema"})
+            return
+        }
+    )
+
+    //Tenemos una promesa pendiente, al guardarse el campus
+    //Se nos ocurre mostrar la información de la institución a la que
+    //Pertenece
+     //Buscamos el registro ya creado y comenzamos a 
+     //poblar los la relacion con Institución
+    promesa.then(
+        data=>{
+            Campus
+            .findOne({_id:data._id})
+            .populate(constants.populateQueryCampusInstitution)
+            .then(
+            campus=>{
+                res.status(200).send({data:campus});
+                return;
+            });
         }
     ).catch(
         err=>{

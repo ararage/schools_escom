@@ -13,32 +13,27 @@ var Institution = require('../models/institution');
 function store(req, res) {
 
     var institution = new Institution(req.body)
-
+    
     institution
-            .save()
-            .then(
-                institutionSaved=>{
-                    if(institutionSaved){
-                        res.status(200).send({ data: institutionSaved })
-                        return
-                    }else{
-                        res.status(500).send({ message: "Ocurrio un error interno" })
-                        return
-                    }
-                },
-                reject => {
-                    if(reject.code && reject.code == 11000){
-                        res.status(409).send({message:"Ya existe una institución con el mismo nombre"})
-                        return 
-                    }else{
-                        res.status(409).send({message:reject})
-                        return 
-                    }
-                }
-            ).catch(err=>{
-                res.status(500).send({message:"Error interno del sistema"})
+        .save()
+        .then(
+            institutionSaved=>{
+                res.status(200).send({ data: institutionSaved })
                 return
-            });
+            },
+            reject => {
+                if(reject.code && reject.code == 11000){
+                    res.status(409).send({message:"Ya existe una institución con el mismo nombre"})
+                    return 
+                }else{
+                    res.status(409).send({message:reject})
+                    return 
+                }
+            }
+        ).catch(err=>{
+            res.status(500).send({message:"Error interno del sistema"})
+            return
+        });
 }
 
 /**

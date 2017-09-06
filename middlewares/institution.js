@@ -68,24 +68,30 @@ function findInstitutionById(req,res,next){
  * Fecha Última Actualización: 04/09/2017
  * Rev:  0.0.1 - 040917 Creación de la función
  * Versión : 0.0.1
- * Middleware que se encarga de listar todas las instituciones
- * req.institutions = {}
+ * Middleware que se encarga de listar todas las instituciones, si llega el parametro
+ * page se listan los elementos de la pagina proporcionada, si no llega el parametro
+ * se muestran todos los resultados
  * **/
 function list(req,res,next){
     req.institutions = {}
+    
     var query = 
         Institution
         .find({})
         
         if(req.params.page){
+            //Se mostraran 5 elementos por página
             var itemsPP = 5
+            //Verificamos que página es la que llega
             var page = Number(req.params.page)
+            //Utilizamos la función paginate, nos devuelve los resultados y el total de registros
             query.paginate(page,itemsPP,function(err,data,total){
                 if(err){
                     res.status(500).send({ message: 'Error interno del sistema'+err})
                     return
                 }else{
                     req.institutions = data;
+                    req.institution.total = total
                     next()
                 }
             })

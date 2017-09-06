@@ -85,7 +85,6 @@ function findSchoolById(req,res,next){
                             return
                         }else{
                             req.schoolFound = data
-                            //req.oldCampus = data.campus._id
                             next()
                         }
                     }
@@ -172,10 +171,6 @@ function updateCampus(req,res,next){
         //Mantenemos en una bandera el campus anterior
         req.oldCampus = req.schoolFound.campus._id
         req.schoolFound.campus = req.body.campus
-        console.log("OLD CAMPUS ")
-        console.log(req.oldCampus)
-        console.log("NEW CAMPUS")
-        console.log(req.schoolFound.campus)
         next()
     }
 }
@@ -193,16 +188,10 @@ function deleteOldCampus(req, res,next) {
     //Eliminamos el campus donde se encuentre dada de alta la escuela
     if(req.body.campus){
         //Eliminamos la escuela del campus viejo
-        //console.log("OLD")
-        //console.log(req.oldCampus)
         Campus
             .findByIdAndUpdate({_id:req.oldCampus},{ $pull: {schools: req.params.id}})
             .exec()
             .then(data=>{
-                console.log("PRUEBA")
-                console.log(data)
-                console.log("Campus nuevo")
-                console.log(req.campusFound)
                 //Ahora guardamos en el nuevo campus la relación
                 req.campusFound.schools.push(req.params.id)
                 next()

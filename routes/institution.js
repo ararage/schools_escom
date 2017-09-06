@@ -42,7 +42,6 @@ api.delete('/institutions/:id?',
 
 //Ruta para obtener campus por id de "Institution" 
 api.get('/institutions/:id/campuses',
-    //InstitutionMidd.findInstitutionById,
     InstitutionMidd.findInstitutionByIdCampuses,
     InstitutionController.showCampuses
 );

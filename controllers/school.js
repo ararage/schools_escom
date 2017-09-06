@@ -26,32 +26,32 @@ function store(req, res) {
         }
     ).catch(
         err=>{
-            res.status(500).send({ message: "Error interno del sistema." })
+            res.status(500).send({message:"Error interno del sistema."})
             return
         }
     )
 
     //Finalizamos la promesa creando la relacion y guardando el campus
     promesaSchool.then(data=>{
-         //Creamos la relación de campus con escuela
-        req.campusFound.schools.push(data._id)
-        req.campusFound
-             .save()
-             .then(
-                 campus=>{
-                     res.status(200).send({ data: data })
-                     return
-                 },
-                 reject=>{
-                    res.status(409).send({message:reject})
+    //Creamos la relación de campus con escuela
+    req.campusFound.schools.push(data._id)
+    req.campusFound
+            .save()
+            .then(
+                campus=>{
+                    res.status(200).send({ data: data })
                     return
-                 }
-             ).catch(
-                 err=>{
-                     res.status(500).send({ message: "Error interno del sistema." })
-                     return
-                 }
-             )
+                },
+                reject=>{
+                res.status(409).send({message:reject})
+                return
+                }
+            ).catch(
+                err=>{
+                    res.status(500).send({ message: "Error interno del sistema." })
+                    return
+                }
+            )
         }
     )
 }

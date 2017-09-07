@@ -43,8 +43,12 @@ function findInstitutionById(req,res,next){
             .exec()
             .then(
                 data=>{
-                    req.institutionFound = data;
-                    next()
+                    if(!data){
+                        res.status(404).send({message:"No existe la institución con el id proporcionado"})
+                    }else{
+                        req.institutionFound = data;
+                        next()
+                    }
                 }
             ).catch(
                 err=>{

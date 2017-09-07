@@ -1,0 +1,8 @@
+extends layout
+body
+  block content
+    div(id="images")
+        center
+            img.image(src='/images/notfound.jpg')
+        h1(class="text-center")= message
+        h2(class="text-center")= error.status

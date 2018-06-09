@@ -35,7 +35,11 @@ var CampusSchema = new Schema({
         ref: 'Institution'
     },
     schools: [{ type: Schema.ObjectId, ref: 'School' }]
-}, {
+},
+{
+    usePushEach: true 
+},
+{
     timestamps: true
 })
 

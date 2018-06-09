@@ -28,8 +28,9 @@ var SchoolSchema = new Schema({
         select:false,
         ref: 'Campus',
         required: 'Inserta un campus.'
-    }
-}, {
+    },
+}, 
+{
     timestamps: true
 })
 
